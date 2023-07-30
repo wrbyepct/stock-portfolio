@@ -45,47 +45,46 @@ class Stock:
     def _get_price(self):
         soup = self._get_soup()
         
-        price_str = soup.select_one('div.YMlKec.fxKbKc').text
-        price = float(price_str.strip('$'))
-        
-        ## Decide convert the currency or not
-        currency = self._get_currency(soup)
-        
+        # Select the div that contains all of the data information instead of the randomly generated divs
+        data_div = soup.select_one('div[data-last-price]')
+        price = float(data_div.get('data-last-price'))
+        currency = data_div.get('data-currency-code')
+       
         ## If not USD convert it USD 
         if currency != "USD":
             price = self._convert(currency, price)
 
         return price
+      
     
-    
-    def _get_currency(self, soup):
-        ## Because there many divs with class 'P6K39c'
-        ## So let's us re to further pinpoint the text pattern we want to find 
-        currency_tag = soup.find(
-            'div',
-            attrs={'class': 'P6K39c'}, 
-            string=re.compile('.+\s[A-Z]{3}')
-        )
-        currency = currency_tag.text[-3:]
-        return currency
-    
-    
-    def _convert(self, currency, amount):
-        ## call exchange rate api 
-        base_endpoint = "http://api.exchangeratesapi.io/v1/latest"
-        params = {
-            "access_key": API_KEY,
-        }
-        resp = r.get(base_endpoint, params=params)
+    def _convert(self, currency, price):
+        ## We can get conversion rate at Google Finance
+        url = "https://www.google.com/finance/"
+        params = f"quote/{currency}-USD"
+        resp = r.get(url+params)
+        soup = BeautifulSoup(resp.content, "html.parser")
+
+        data_div = soup.select_one('div[data-last-price]')
+        rate = float(data_div.get('data-last-price'))
+        USD = price * rate
+        return USD
+
+
+        # ## call exchange rate api 
+        # base_endpoint = "http://api.exchangeratesapi.io/v1/latest"
+        # params = {
+        #     "access_key": API_KEY,
+        # }
+        # resp = r.get(base_endpoint, params=params)
         
-        ## Convert raw response to json
-        resp = json.loads(resp.content.decode())
+        # ## Convert raw response to json
+        # resp = json.loads(resp.content.decode())
         
-        ## Convert the rate
-        rates = resp['rates']
-        ## Because this endpoint only has EUR as the base 
-        ## So we need to convert it back to EUR and then convert it to target currency
-        USD = amount / rates[f'{currency}'] * rates['USD']
+        # ## Convert the rate
+        # rates = resp['rates']
+        # ## Because this endpoint only has EUR as the base 
+        # ## So we need to convert it back to EUR and then convert it to target currency
+        # USD = amount / rates[f'{currency}'] * rates['USD']
   
         return USD
 
@@ -93,3 +92,6 @@ class Stock:
 if __name__ == '__main__':
     bns = Stock('BNS', "TSE")
     shop = Stock('SHOP', 'TSE')
+    print(bns.price, shop.price)
+   
+    
