@@ -7,6 +7,8 @@
 ## What can this app do?
 Add your stocks owned and have nice view on them as a portfolio summary
 
+**NOTE:** The currency is automatically converted to USD
+
 ![Alt Text](table.png)
 
 ## How to use this app?
