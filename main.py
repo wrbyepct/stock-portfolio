@@ -1,8 +1,6 @@
 from tabulate import tabulate
 import re
-
-from stock import Stock, Position, Portfolio
-
+from stock import Stock, Portfolio
 import error as e
 
 
@@ -60,9 +58,9 @@ def get_position():
     print("Adding to your portfolio...")
 
     # Append valid stock to stock list
-    stock = Stock(ticker, exchange)
-    position = Position(stock, quantity)
-    return position
+    stock = Stock(ticker, exchange, quantity)
+    
+    return stock
 
 
 def ask_for_adding_stocks():
@@ -75,7 +73,7 @@ def ask_for_adding_stocks():
 
         print()
         acceptable_answer = ["y", 'yes', 'yeah', 'n', 'no', 'nah']
-        action = input("Keep adding stock to your portfolio? (y/n)").lower()
+        action = input("Keep adding stock to your portfolio? (y/n): ").lower()
         print()
         try:
             if action not in acceptable_answer:
