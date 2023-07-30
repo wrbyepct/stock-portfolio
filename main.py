@@ -102,7 +102,10 @@ def display_portifolio(portfolio):
 
 if __name__ == "__main__":
     positions = ask_for_adding_stocks()
+    positions = sorted(positions, key=lambda x: x.market_value, reverse=True)
     portfolio = Portfolio(positions)
+
+    
 
     display_portifolio(portfolio)
     

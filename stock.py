@@ -116,6 +116,8 @@ if __name__ == '__main__':
         shop,
         msft
     ]
+    
+    positions = sorted(positions, key=lambda x: x.market_value)
 
     portfolio = Portfolio(positions)
 
