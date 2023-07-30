@@ -1,5 +1,5 @@
 class BadSearchInputError(Exception):
-    def __init__(self, message="Ticker or Exchange does not exist, please check your input again"):
+    def __init__(self, message="Ticker or Exchange does not exist, please check your input again."):
         self.message = message
 
 class BadTickerInputError(Exception):

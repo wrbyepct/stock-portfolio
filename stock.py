@@ -64,7 +64,7 @@ def get_soup(ticker, exchange):
     
     ## Catch bad input: non-existing ticker or exchange
     try:
-        could_not_find = soup.find('div', attrs={'class': 'b4EnYd'})
+        could_not_find = soup.find('div', string="We couldn't find any match for your search.")
         if could_not_find is not None:
             raise BadSearchInputError
         else:
@@ -105,7 +105,7 @@ def convert(currency, price):
 
 
 if __name__ == '__main__':
-    bns = Stock('BNS', 'TSE', 100)
+    bns = Stock('BNS', 'zzE', 100)
     googl = Stock('GOOGL', 'NASDAQ', 30)
     shop = Stock('SHOP', 'TSE', 10)
     msft = Stock('MSFT', 'NASDAQ', 2)
