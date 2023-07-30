@@ -34,11 +34,11 @@ class Portfolio:
         tickers = [p.ticker for p in positions]
         exchanges = [p.exchange for p in positions]
         quantity = [p.quantity for p in positions]
-        prices = ["{:.2f}".format(p.price) for p in positions]
-        market_values = ["{:.2f}".format(p.market_value) for p in positions]
+        prices = [p.price for p in positions]
+        market_values = [p.market_value for p in positions]
         
-        allocs = [round(p.market_value / self.total * 100, 2) for p in positions]
-        allocations = ["{:.2f}".format(alloc) for alloc in allocs]
+        allocs = [p.market_value / self.total * 100 for p in positions]
+        allocations = [alloc for alloc in allocs]
         
         position_dict = {
             "Ticker": tickers, 

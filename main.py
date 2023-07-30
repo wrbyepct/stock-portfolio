@@ -91,9 +91,8 @@ def display_portifolio(portfolio):
     table = tabulate(
         data, headers="keys", 
         tablefmt="fancy_grid", 
-        stralign="right", 
-        colalign=("left", "left"), 
-        disable_numparse=True
+        floatfmt=".2f",
+
     )
     print(table)
 
