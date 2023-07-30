@@ -1,9 +1,8 @@
 from tabulate import tabulate
 import re
 
-from stock import Stock
-from position import Position
-from portfolio import Portfolio
+from stock import Stock, Position, Portfolio
+
 import error as e
 
 
